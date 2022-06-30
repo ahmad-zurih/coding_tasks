@@ -124,13 +124,19 @@ def scrape_emails_multiple_names(entity_names: list):
     result_dic = {}
     for name in entity_names:
         if name == entity_names[0]:
-            emails = scrape_emails(name)
-            result_dic[name] = emails
-            time.sleep(5)
+            try:
+                emails = scrape_emails(name)
+                result_dic[name] = emails
+                time.sleep(2)
+            except:
+                pass
         else:
-            emails = scrape_emails_without_accepting_google_cookies(name)
-            result_dic[name] = emails
-            time.sleep(5)
+            try:
+                emails = scrape_emails_without_accepting_google_cookies(name)
+                result_dic[name] = emails
+                time.sleep(2)
+            except:
+                pass
     with open("results.json", "w") as outfile:
         json.dump(result_dic, outfile)
     return None
@@ -139,7 +145,7 @@ def scrape_emails_multiple_names(entity_names: list):
 # testing
 def main():
     names_list = []
-    with open("entity_names_example.txt", "r") as file:
+    with open("entity_names_real.txt", "r", encoding="UTF-8") as file:
         for line in file:
             names_list.append(line.strip())
     scrape_emails_multiple_names(names_list)
