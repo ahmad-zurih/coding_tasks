@@ -1,0 +1,72 @@
+# count of the people who are board members of the foundations in Basel.
+
+    SELECT COUNT(function_class)
+    FROM foundation_people
+    INNER JOIN foundations
+        ON foundation_people.foundation_id = foundations.id
+    WHERE foundation_people.function_class = "MEMBER"
+    OR foundation_people.function_class = "PRESIDENT"
+    AND foundations.canton = "BS"
+  
+
+# how many of those board members are swiss nationals
+
+    SELECT COUNT(function_class)
+    FROM foundation_people 
+    INNER JOIN foundations
+        ON foundation_people.foundation_id = foundations.id
+    INNER JOIN people
+        ON foundation_people.person_id = people.id
+    WHERE foundation_people.function_class = "MEMBER"
+    OR foundation_people.function_class = "PRESIDENT"
+    AND foundations.canton = "BS" 
+    AND people.nationality = "CH_res"
+   
+
+
+# how many of those board members are NOT swiss nationals
+
+    SELECT COUNT(function_class)
+    FROM foundation_people
+    INNER JOIN foundations
+        ON foundation_people.foundation_id = foundations.id
+    INNER JOIN people
+        ON foundation_people.person_id = people.id
+    WHERE foundation_people.function_class = "MEMBER"
+    OR foundation_people.function_class = "PRESIDENT"
+    AND foundations.canton = "BS"
+    AND people.nationality != "CH_res"
+   
+
+
+
+# people in the board who are swiss citizens and residents in Basel.
+
+    SELECT COUNT(function_class)
+    FROM foundation_people
+    INNER JOIN foundations
+        ON foundation_people.foundation_id = foundations.id
+    INNER JOIN people
+        ON foundation_people.person_id = people.id
+    WHERE foundation_people.function_class = "MEMBER"
+    OR foundation_people.function_class = "PRESIDENT"
+    AND foundations.canton = "BS"
+    AND people.nationality = "CH_res"
+    AND people.residence = "Basel"
+    
+
+
+
+# people in the board who are residents in Basel regardless of nationality.
+
+    SELECT COUNT(function_class)
+    FROM foundation_people
+    INNER JOIN foundations
+        ON foundation_people.foundation_id = foundations.id
+    INNER JOIN people
+        ON foundation_people.person_id = people.id
+    WHERE foundation_people.function_class = "MEMBER"
+    OR foundation_people.function_class = "PRESIDENT"
+    AND foundations.canton = "BS"
+    AND people.residence = "Basel"
+    
